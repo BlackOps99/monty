@@ -54,6 +54,7 @@ void (*run_opt(char *opcode))(stack_t **, unsigned int)
 	instruction_t op_funcs[] = {
 	    {"push", push},
 	    {"pall", pull},
+	    {"pint", pint},
 	    {NULL, NULL}};
 
 	int i;

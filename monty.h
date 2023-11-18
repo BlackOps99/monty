@@ -57,5 +57,6 @@ void (*run_opt(char *opcode))(stack_t **, unsigned int);
 
 void push(stack_t **stack, unsigned int line_number);
 void pull(stack_t **stack, unsigned int line_number);
+void pint(stack_t **stack, unsigned int line_number);
 
 #endif
