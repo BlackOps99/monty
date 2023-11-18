@@ -13,8 +13,8 @@ int readLine(stack_t **stack, char line[1024], int ln)
 	char arg[128] = "";
 	char *value = arg;
 
-	opcode = strtok(line, " \t\r\n\v\f");
-	value = strtok(NULL, " \t\r\n\v\f");
+	opcode = strtok(line, " \t\r\n\v\f\b");
+	value = strtok(NULL, " \t\r\n\v\f\b");
 
 	func = run_opt(opcode);
 	if (func == NULL)
