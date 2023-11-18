@@ -1,14 +1,19 @@
 #include "monty.h"
 
+myData_n myData = {0, 0};
+
+/**
+ * main - Start LIFO, FILO program
+ * @argc: Count of arguments
+ * @argv: Pointer that containing arguments that passed to program
+ * Return: 0 Success, 1 Failed
+ */
 int main(int argc, char *argv[])
 {
 	FILE *fileReader;
 	char line[1024];
-	int ln = 0;
-	char *token, *opcode, *value;
-	void (*func)(stack_t **, unsigned int);
+	int ln = 0, res = 0;
 	stack_t *stack = NULL;
-	myData_n *data = NULL;
 
 	if (argc < 2)
 	{
@@ -23,31 +28,27 @@ int main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	}
 
-	if (createStack(&stack) != 1)
-	{
-		fprintf(stderr, "Error: malloc failed\n");
-		return (EXIT_FAILURE);
-	}
-
 	while (fgets(line, sizeof(line), fileReader) != NULL)
 	{
 		ln++;
-		token = strtok(line, " \t\n");
-		while (token != NULL)
+		res = readLine(&stack, line, ln);
+		if (res != EXIT_SUCCESS)
 		{
-			opcode = strtok(token, " ");
-			printf("%s %s\n", opcode, value); // atoi(token);
-
-			token = strtok(NULL, " \t\n");
+			freeStack(&stack);
+			fclose(fileReader);
+			return (res);
 		}
 	}
 
 	freeStack(&stack);
-
 	fclose(fileReader);
 	return (EXIT_SUCCESS);
 }
-
+/**
+ * run_opt - Start LIFO, FILO program
+ * @opcode: for start run the program
+ * Return: No Thing
+ */
 void (*run_opt(char *opcode))(stack_t **, unsigned int)
 {
 	instruction_t op_funcs[] = {

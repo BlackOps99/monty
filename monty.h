@@ -39,7 +39,7 @@ typedef struct instruction_s
 /**
  * struct myDataInfo - program representation
  * @mode: FIFO OR LIFO
- * @num: the number to deal with
+ * @value: the number to deal with
  *
  * Description: struct to save data to process program
  * for stack, queues, LIFO, FIFO
@@ -51,9 +51,7 @@ typedef struct myDataInfo
 } myData_n;
 
 extern myData_n myData;
-
-int createMyData(myData_n *data);
-int createStack(stack_t **stack);
+int readLine(stack_t **stack, char line[1024], int ln);
 void freeStack(stack_t **stack);
 void (*run_opt(char *opcode))(stack_t **, unsigned int);
 
