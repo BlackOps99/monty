@@ -21,7 +21,7 @@ int readLine(stack_t **stack, char line[1024], int ln)
 			func = run_opt(opcode);
 			if (func == NULL)
 			{
-				fprintf(stderr, "L<%d>: unknown instruction <%s>\n", ln, opcode);
+				fprintf(stderr, "L<%d>: unknown instruction %s\n", ln, opcode);
 				return (EXIT_FAILURE);
 			}
 			if (strcmp(opcode, "pall") != 0 && value == NULL)
