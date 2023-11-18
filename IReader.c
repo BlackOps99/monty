@@ -8,33 +8,28 @@
  */
 int readLine(stack_t **stack, char line[1024], int ln)
 {
-	char *token, *opcode, *value;
+	char *opcode;
 	void (*func)(stack_t **, unsigned int);
+	char arg[128] = "";
+	char *value = arg;
 
-	token = strtok(line, "\n\t\a\b");
-	while (token != NULL)
+	opcode = strtok(line, " \t\r\n\v\f");
+	value = strtok(NULL, " \t\r\n\v\f");
+
+	func = run_opt(opcode);
+	if (func == NULL)
 	{
-		opcode = strtok(token, " ");
-		if (opcode != NULL)
-		{
-			value = strtok(NULL, " \t\n\a\b");
-			func = run_opt(opcode);
-			if (func == NULL)
-			{
-				fprintf(stderr, "L%d: unknown instruction %s\n", ln, opcode);
-				return (EXIT_FAILURE);
-			}
-			if (strcmp(opcode, "pall") != 0 && value == NULL)
-			{
-				fprintf(stderr, "L%d: usage: push integer\n", ln);
-				return (EXIT_FAILURE);
-			}
-			if (strcmp(opcode, "pall") && value != NULL)
-				myData.value = atoi(value);
-			func(stack, ln);
-		}
-		token = strtok(NULL, "\n\t\a\b");
+		fprintf(stderr, "L%d: unknown instruction %s\n", ln, opcode);
+		return (EXIT_FAILURE);
 	}
+	if (strcmp(opcode, "pall") != 0 && value == NULL)
+	{
+		fprintf(stderr, "L%d: usage: push integer\n", ln);
+		return (EXIT_FAILURE);
+	}
+	if (strcmp(opcode, "pall") && value != NULL)
+		myData.value = atoi(value);
+	func(stack, ln);
 
 	return (EXIT_SUCCESS);
 }
