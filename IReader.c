@@ -27,7 +27,7 @@ int readLine(stack_t **stack, char line[1024], int ln)
 		fprintf(stderr, "L%d: usage: push integer\n", ln);
 		return (EXIT_FAILURE);
 	}
-	if (strcmp(opcode, "pall") && value != NULL)
+	if (value != NULL)
 		myData.value = atoi(value);
 	func(stack, ln);
 
